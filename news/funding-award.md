@@ -13,4 +13,4 @@ category: announcement
 
 <p>The project is led by Pierluigi Cassotti at the University of Gothenburg, in collaboration with Naomi Baes (University of Tübingen), Nick Haslam (University of Melbourne), Marco Antonio Stranisci (IT University of Copenhagen), and Oscar Kjell (Lund University / Vanderbilt University).</p>
 
-<p>The research project is scheduled to run from <strong>1 January 2027 to 31 December 2029</strong>.</p>
+<p>The research project is scheduled to run from <strong>1 January 2027 to 31 December 2029</strong>. with a total grant of <strong>SEK 5,726,371</strong>.</p>
