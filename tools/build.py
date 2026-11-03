@@ -46,10 +46,10 @@ def render_md(source):
         else: out.append('<p>'+inline(' '.join(block.splitlines()))+'</p>')
     return '\n'.join(out)
 
-def frame(section, title, lede, body, subpage=False):
+def frame(section, title, body, subpage=False):
     prefix='../' if subpage else ''
     nav=''.join(f'<a href="{prefix}{slug}.html"'+(' aria-current="page"' if slug==section else '')+f'>{label}</a>' for slug,label in [('about','About'),('research','Research'),('work-packages','Work packages'),('people','People'),('publications','Publications'),('news','News'),('funding','Funding')])
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content="{escape(lede,quote=True)}"><title>{escape(title)} | MindShift</title><link rel="stylesheet" href="{prefix}styles.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap navwrap"><a class="logo" href="{prefix}index.html" aria-label="MindShift home"><span class="mark">◒</span> Mind<span>Shift</span></a><button class="menu" aria-controls="navigation" aria-expanded="false">Menu ☰</button><nav id="navigation" aria-label="Main navigation">{nav}</nav></div></header><main id="main"><section class="pagehead"><div class="wrap"><div class="eyebrow">{escape(section.upper())}</div><h1>{escape(title)}</h1><p class="lede">{escape(lede)}</p></div></section>{body}</main><footer><div class="wrap foot"><div><a class="logo" href="{prefix}index.html">Mind<span>Shift</span></a><p>Meaning Change in Mental Health Terminology and Its Impact on Human–AI Interaction</p></div><div><strong>Project</strong><p>2027–2029 · RJ P26-0179<br>University of Gothenburg</p><a href="mailto:pierluigi.cassotti@gu.se">Contact the principal investigator ↗</a></div></div></footer><script src="{prefix}script.js"></script></body></html>'''
+    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="description" content=""><title>{escape(title)} | MindShift</title><link rel="stylesheet" href="{prefix}styles.css"></head><body><a class="skip" href="#main">Skip to content</a><header class="header"><div class="wrap navwrap"><a class="logo" href="{prefix}index.html" aria-label="MindShift home"><span class="mark">◒</span> Mind<span>Shift</span></a><button class="menu" aria-controls="navigation" aria-expanded="false">Menu ☰</button><nav id="navigation" aria-label="Main navigation">{nav}</nav></div></header><main id="main"><section class="pagehead"><div class="wrap"><div class="eyebrow">{escape(section.upper())}</div><h1>{escape(title)}</h1></div></section>{body}</main><footer><div class="wrap foot"><div><a class="logo" href="{prefix}index.html">Mind<span>Shift</span></a><p>Meaning Change in Mental Health Terminology and Its Impact on Human–AI Interaction</p></div><div><strong>Project</strong><p>2027–2029 · RJ P26-0179<br>University of Gothenburg</p><a href="mailto:pierluigi.cassotti@gu.se">Contact the principal investigator ↗</a></div></div></footer><script src="{prefix}script.js"></script></body></html>'''
 
 def build(section):
     items=[]
@@ -72,12 +72,12 @@ def build(section):
     if section=='publications':
         project=[x for x in items if x[2] in ('mindshift','project','output')]
         related=[x for x in items if x not in project]
-        content='<section class="section"><div class="wrap"><h2>MindShift outputs</h2>'+cards(project)+'</div></section><section class="section muted"><div class="wrap"><h2>Selected related publications</h2><p>Previous and related research; not outputs of the MindShift grant.</p>'+cards(related)+'</div></section>'
-        title='Publications and research outputs'; lede='Research outputs from MindShift and selected related publications.'
+        content='<section class="section"><div class="wrap">'+cards(project)+'</div></section>'
+        title='Publications and research outputs'
     else:
         content='<section class="section"><div class="wrap">'+cards(items)+'</div></section>'
-        title='Project news'; lede='Announcements and updates from the MindShift research project.'
-    (ROOT/(section+'.html')).write_text(frame(section,title,lede,content),encoding='utf-8')
+        title='Project news'
+    (ROOT/(section+'.html')).write_text(frame(section,title,content),encoding='utf-8')
     print(f'{section}: {len(items)} entries generated')
 
 if __name__=='__main__':
