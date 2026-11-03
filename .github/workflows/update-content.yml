@@ -1,0 +1,31 @@
+name: Update news and publications
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'news/*.md'
+      - 'publications/*.md'
+      - 'tools/build.py'
+      - '.github/workflows/update-content.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Generate pages and indexes
+        run: python tools/build.py
+      - name: Commit generated pages
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add news/*.html publications/*.html news.html publications.html
+          if ! git diff --cached --quiet; then
+            git commit -m 'Generate news and publication pages'
+            git push
+          fi
