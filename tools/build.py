@@ -59,7 +59,7 @@ def build(section):
         slug=path.stem
         category=meta.get('category','related' if section=='publications' else 'update').lower()
         body=f'<section class="section"><div class="wrap article"><p class="meta">{escape(meta["date"])}'+(f' · {escape(meta["authors"])}' if meta.get('authors') else '')+'</p>'+render_md(source)+f'<p><a href="../{section}.html">← All {section}</a></p></div></section>'
-        (ROOT/section/(slug+'.html')).write_text(frame(section,meta['title'],meta['summary'],body,True),encoding='utf-8')
+        (ROOT/section/(slug+'.html')).write_text(frame(section,meta['title'],body,True),encoding='utf-8')
         items.append((meta,slug,category))
     valid = {slug for _, slug, _ in items}
     for old_page in (ROOT/section).glob('*.html'):
